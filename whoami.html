@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ✅ Metadata & Security -->
+  <title>> glad_ | whoami</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline';">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="referrer" content="no-referrer" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+  <!-- ✅ Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Press+Start+2P&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --main-color: #f5f5f5;
+      --accent-color: #9fef00;
+      --bg-color: #0e0e0e;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg-color);
+      color: var(--main-color);
+      font-family: 'Fira Code', monospace;
+      overflow-x: hidden;
+    }
+
+    canvas#matrix {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+    }
+
+    .logo {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 3;
+    }
+
+    .logo img {
+      height: 40px;
+      width: auto;
+    }
+
+    .whoami-section {
+      position: relative;
+      z-index: 2;
+      padding: 80px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .whoami-container {
+      max-width: 800px;
+      background: rgba(0, 0, 0, 0.95);
+      padding: 30px;
+      border-radius: 12px;
+      border: 1px solid var(--accent-color);
+      box-shadow: 0 0 20px var(--accent-color);
+    }
+
+    .whoami-heading {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 1.2rem;
+      color: var(--accent-color);
+      margin-bottom: 30px;
+      position: relative;
+      display: inline-block;
+      animation: glitch-skew 1.5s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitch-skew {
+      0% { transform: skew(0deg); }
+      20% { transform: skew(4deg); }
+      50% { transform: skew(-4deg); }
+      80% { transform: skew(2deg); }
+      100% { transform: skew(0deg); }
+    }
+
+    .whoami-container p {
+      font-size: 0.65rem;
+      line-height: 1.8;
+      margin-bottom: 20px;
+      color: #d4fcbc;
+    }
+
+    .whoami-container a {
+      color: var(--accent-color);
+      text-decoration: underline;
+    }
+
+    .whoami-img {
+      margin-top: 20px;
+      max-width: 100px;
+      float: right;
+      border: 1px solid var(--accent-color);
+      box-shadow: 0 0 10px var(--accent-color);
+    }
+
+    footer {
+      position: relative;
+      text-align: center;
+      font-size: 0.6rem;
+      padding: 20px;
+      color: var(--accent-color);
+    }
+
+    /* ✅ Mobile */
+    @media screen and (max-width: 768px) {
+      .whoami-container {
+        padding: 20px;
+        border-radius: 10px;
+      }
+
+      .whoami-heading {
+        font-size: 1rem;
+      }
+
+      .whoami-container p {
+        font-size: 0.55rem;
+      }
+
+      .whoami-img {
+        float: none;
+        display: block;
+        margin: 20px auto 0;
+        max-width: 80px;
+      }
+
+      .logo img {
+        height: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="matrix" aria-hidden="true"></canvas>
+
+  <div class="logo">
+    <img src="assets/flutegreen.png" alt="Glad Logo" loading="lazy">
+  </div>
+
+  <section class="whoami-section">
+    <div class="whoami-container">
+      <h2 class="whoami-heading">$ whoami</h2>
+      <p>
+        I’m Glad — a 20-year-old penetration tester and flutist.<br>
+        I break systems by day, breathe music by night.<br>
+        Passionate about cybersecurity, code, and creativity.<br>
+        Exploring vulnerabilities and composing melodies.<br>
+        Rooted in logic. Driven by rhythm.
+      </p>
+
+      <p>
+        You’re inside my head now—welcome to the echo chamber.
+      </p>
+      
+    </div>
+  </section>
+
+  <footer>
+    © 2025 – Glad. ~/brain > make install: caffeine, madness & midnight thoughts ☕⌨️
+  </footer>
+
+  <script>
+    (() => {
+      const canvas = document.getElementById("matrix");
+      const ctx = canvas.getContext("2d");
+
+      let fontSize = 14;
+      let columns, drops;
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        columns = Math.floor(canvas.width / fontSize);
+        drops = new Array(columns).fill(1);
+      }
+
+      resizeCanvas();
+
+      const hex = "01";
+
+      function draw() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#9fef00";
+        ctx.font = fontSize + "px monospace";
+
+        for (let i = 0; i < drops.length; i++) {
+          const text = hex[Math.floor(Math.random() * hex.length)];
+          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+          drops[i]++;
+        }
+      }
+
+      setInterval(draw, 33);
+
+      window.addEventListener("resize", () => {
+        resizeCanvas();
+      });
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>> glad_</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+  <style>
+    :root {
+      --main-color: #f5f5f5;
+      --accent-color: #9fef00;
+      --bg-color: #0e0e0e;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg-color);
+      font-family: 'Fira Code', monospace;
+      color: var(--main-color);
+      overflow: hidden;
+    }
+
+    canvas#matrix {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+    }
+
+    .logo {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 3;
+    }
+
+    .logo img {
+      height: 40px;
+      width: auto;
+      max-width: 100%;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    .content-box {
+      background: rgba(14, 14, 14, 0.95);
+      padding: 40px 30px;
+      text-align: center;
+      border-radius: 16px;
+      box-shadow: 0 0 40px rgba(159, 239, 0, 0.3);
+      max-width: 90vw;
+      width: 550px;
+    }
+
+    h1 {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 1.6rem;
+      color: var(--accent-color);
+      margin-bottom: 20px;
+    }
+
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0;
+      width: 100%;
+      color: var(--main-color);
+      overflow: hidden;
+    }
+
+    .glitch {
+      position: relative;
+      display: inline-block;
+    }
+
+    .glitch::before {
+      animation: glitchTop 1.5s infinite linear alternate-reverse;
+    }
+
+    .glitch::after {
+      animation: glitchBottom 1.5s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitchTop {
+      0% { clip: rect(0, 9999px, 0, 0); }
+      20% { clip: rect(0, 9999px, 20px, 0); transform: translate(-2px, -2px); }
+      50% { clip: rect(5px, 9999px, 25px, 0); transform: translate(2px, 2px); }
+      100% { clip: rect(0, 9999px, 0, 0); }
+    }
+
+    @keyframes glitchBottom {
+      0% { clip: rect(0, 9999px, 0, 0); }
+      20% { clip: rect(30px, 9999px, 50px, 0); transform: translate(2px, -1px); }
+      50% { clip: rect(40px, 9999px, 60px, 0); transform: translate(-2px, 1px); }
+      100% { clip: rect(0, 9999px, 0, 0); }
+    }
+
+    .subtitle {
+      color: var(--main-color);
+      font-size: 0.9rem;
+      margin-top: 15px;
+      min-height: 1.2rem;
+      word-break: break-word;
+    }
+
+    .buttons {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .buttons a {
+      background: transparent;
+      padding: 12px 20px;
+      color: var(--accent-color);
+      border: 1px solid var(--accent-color);
+      font-size: 0.7rem;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease-in-out;
+      border-radius: 4px;
+    }
+
+    .buttons a::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      width: 100%;
+      background-color: var(--accent-color);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .buttons a:hover::after {
+      transform: scaleX(1);
+    }
+
+    .buttons a:hover {
+      background-color: var(--accent-color);
+      color: var(--bg-color);
+      box-shadow: 0 0 10px var(--accent-color);
+    }
+
+    .ascii-art {
+      margin-top: 25px;
+      color: var(--main-color);
+      font-size: 0.7rem;
+      line-height: 1.2;
+      white-space: pre;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 0.6rem;
+      color: var(--accent-color);
+      z-index: 3;
+      padding: 0 10px;
+    }
+
+    .socials {
+      margin-bottom: 6px;
+    }
+
+    .socials a {
+      margin: 0 8px;
+      color: var(--accent-color);
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+
+    .socials a:hover {
+      color: var(--main-color);
+    }
+
+    @media (max-width: 500px) {
+      h1 {
+        font-size: 1.1rem;
+      }
+      .subtitle {
+        font-size: 0.6rem;
+      }
+      .buttons a {
+        font-size: 0.5rem;
+        padding: 8px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="matrix"></canvas>
+  <div class="logo">
+    <img src="assets/flutegreen.png" alt="Logo">
+  </div>
+
+  <div class="container">
+    <div class="content-box">
+      <h1 id="name" data-text="> glad_"></h1>
+      <p class="subtitle"><span id="typed"></span></p>
+      <div class="buttons">
+        <a href="whoami.html">>_ WHOAMI</a>
+        <a href="projects.html">💀 PROJECTS</a>
+      </div>
+      <pre class="ascii-art"> .-.   .-.   .-. 
+| OO| | OO| | OO|
+|   | |   | |   |
+'^^^' '^^^' '^^^'</pre>
+    </div>
+  </div>
+
+  <footer>
+    <div class="socials">
+      <a href="https://github.com/Gobimugilan" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="https://www.linkedin.com/in/gobinathanmugilan" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="mailto:gobinathanmugilan@gmail.com"><i class="fas fa-envelope"></i></a>
+    </div>
+    <p>© 2025 – Glad. ~/brain > make install: caffeine, madness & midnight thoughts ☕⌨️</p>
+  </footer>
+
+  <script>
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+
+    function resizeCanvas() {
+      canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth;
+    }
+
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    const hex = "01";
+    const fontSize = 14;
+    let columns = Math.floor(canvas.width / fontSize);
+    let drops = new Array(columns).fill(1);
+
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#9fef00";
+      ctx.font = fontSize + "px monospace";
+      for (let i = 0; i < drops.length; i++) {
+        const text = hex[Math.floor(Math.random() * hex.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 33);
+
+    window.addEventListener("DOMContentLoaded", () => {
+      new Typed('#name', {
+        strings: ["> glad_"],
+        typeSpeed: 80,
+        showCursor: false,
+        onComplete: () => {
+          document.getElementById('name').classList.add('glitch');
+          setTimeout(() => {
+            new Typed('#typed', {
+              strings: ["$ 20. Hacker || echo 'Born to exploit'"],
+              typeSpeed: 40,
+              showCursor: true,
+              cursorChar: '_'
+            });
+          }, 300);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
